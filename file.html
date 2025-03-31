@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Viewer</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; margin: 20px; }
+        img, video { max-width: 90%; height: auto; margin-top: 20px; }
+        p { font-size: 18px; color: #333; }
+    </style>
+</head>
+<body>
+    <h2>Media Viewer</h2>
+    <div id="media"></div>
+    <p id="caption"></p>
+    
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const query = params.get('q');
+        
+        if (query) {
+            const [mediaUrl, caption] = query.split('@cap');
+            const mediaContainer = document.getElementById("media");
+            const captionElement = document.getElementById("caption");
+            
+            const imageExtensions = ['jpeg', 'jpg', 'gif', 'png', 'webp', 'bmp', 'svg', 'tiff', 'ico'];
+            const videoExtensions = ['mp4', 'webm', 'ogg', 'mkv', 'mov', 'avi', 'flv', 'wmv'];
+            
+            const fileExtension = mediaUrl.split('.').pop().toLowerCase();
+            
+            if (imageExtensions.includes(fileExtension)) {
+                const img = document.createElement("img");
+                img.src = mediaUrl;
+                mediaContainer.appendChild(img);
+            } else if (videoExtensions.includes(fileExtension)) {
+                const video = document.createElement("video");
+                video.src = mediaUrl;
+                video.controls = true;
+                mediaContainer.appendChild(video);
+            } else {
+                mediaContainer.innerHTML = "Invalid media format";
+            }
+            
+            if (caption) {
+                captionElement.textContent = caption;
+            }
+        }
+    </script>
+</body>
+</html>
