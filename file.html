@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Srite</title>
-     <link href="icon.png" type="image/x-icon">
+    <link  href="icon.png" type="image/x-icon">
     <style>
         body { 
             text-align: center; 
@@ -14,26 +14,48 @@
             color: white;
         }
         img, video { 
-            height: 80%; 
+            width: 100%; 
             max-width: 600px; 
             height: auto; 
             margin-top: 20px; 
-            border-radius:10px;
         }
-        p { font-size: 18px; color: white; width:80vw; border-radius:5px; padding-left:0px;background-color:rgb(44, 44, 61);margin-left:10vw;}
+        p { font-size: 18px; color: white; }
+        a { color: #00aaff; text-decoration: none; font-weight: bold; }
+        #caption {
+            border: 2px solid white;
+            padding: 10px;
+            display: inline-block;
+            margin-top: 10px;
+            border-radius: 8px;
+            background-color: rgb(44, 44, 61);
+        }
     </style>
 </head>
 <body>
     
+    <p><a id="userLink" href="#"></a></p>
+    <p id="date"></p>
     <div id="media"></div>
     <p id="caption"></p>
     
     <script>
         const params = new URLSearchParams(window.location.search);
-        const query = params.get('q');
+        const userName = params.get('name');
+        const timestamp = params.get('time');
+        const mediaQuery = params.get('url');
         
-        if (query) {
-            const [mediaUrl, caption] = query.split('@cap');
+        if (userName) {
+            const userLink = document.getElementById("userLink");
+            userLink.textContent = userName;
+            userLink.href = `https://srite.onrender.com/searchres?name=${encodeURIComponent(userName)}`;
+        }
+        
+        if (timestamp) {
+            document.getElementById("date").textContent = `Date: ${timestamp}`;
+        }
+        
+        if (mediaQuery) {
+            const [mediaUrl, caption] = mediaQuery.split('@cap');
             const mediaContainer = document.getElementById("media");
             const captionElement = document.getElementById("caption");
             
